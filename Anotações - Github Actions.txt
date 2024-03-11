@@ -46,3 +46,8 @@
 	• "git branch -D <branch-name>" to delete a branch
 	• "git checkout -b <branch-name>" to create a branch and automatically move to it
 	• "git merge <branch-name>" to automatically merge branches
+
+- Working with GitHub:
+	• "git remote add origin <link>" to add your remote code
+	• "git push -u origin main" to your first connection 
+	• "git push" for updating files in GitHub
