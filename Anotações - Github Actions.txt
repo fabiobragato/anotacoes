@@ -1,0 +1,48 @@
+- Github Actions:
+
+	• A workflow automation service by Github
+	• Automate all kinds of repository-related processes & actions:
+		1. Code Deploymnet (CI/CD):
+			~ Automate code testing, building & deployment
+			~ CI = Continuous Integration (code changes are automatically built, tested & merged with existing code)
+			~ CD = Continuous Delivery (after integration, new app or package versions are published automatically)
+			
+		2. Code & Repository Management:
+			~ Automate code reviews, issue management etc.
+			
+- Git:
+
+	• Is a free version control system
+	• Manage source code changes
+	• Save code snapshots ("commits")
+	• Work with alternative code versions ("branches")
+	• Move between branches & commits ("checkout")
+	
+- GitHub:
+
+	• A cloud git repository & services provider
+	
+- Git basics:
+
+	• "git init" only required once per project
+	• "git add" stage changes for next commit
+	• "git commit" create a commit that includes all staged changes
+	• "git status" gives some information about staged changes
+	• "git commit -m "message here"" creates a snapshot (commit)
+	• "git log" to see all commits:
+		~ HEAD tell us which snapshot our code is loaded
+	• press "q" to leave the "git log"
+	• "git checkout <id>" to switch between commits
+	• "git checkout main" to return to the last commit
+	• "git revert <id>" to revert changes of commit by creating a new commit
+	• "git add ." to include all files in all subfolders
+	
+- Understanding branches:
+
+	• "git branch <name>" to create a new branch
+	• By default, this command ahead takes the currently commit target by head and builds a new branch using this commit as the starting point
+	• "git branch" to list all branches
+	• "git checkout <branch-name>" to change between branchs
+	• "git branch -D <branch-name>" to delete a branch
+	• "git checkout -b <branch-name>" to create a branch and automatically move to it
+	• "git merge <branch-name>" to automatically merge branches
