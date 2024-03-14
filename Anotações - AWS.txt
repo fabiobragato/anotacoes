@@ -154,7 +154,6 @@ AWS Cloud Practioner (CLF - CO2):
 	• Language specific API (ex: Python -> Boto3)
 	• Support many languages
 	
-	
 - CloudShell:
 
 	• Available only for some regions
@@ -167,6 +166,10 @@ AWS Cloud Practioner (CLF - CO2):
 		1. EC2 instance roles
 		2. Lambda function roles
 		3. Roles for CloudFormation
+		
+- AWS Security Token Service (AWS STS):
+
+	• Tool to create and provide trusted users with temporary security credentials
 		
 - IAM Security Tools:
 
@@ -281,7 +284,7 @@ AWS Cloud Practioner (CLF - CO2):
 - EC2 Purchasing Options:
 	
 	• On demand: short workload, predictable pricing, pay by second. Has the hightest cost and no long-term commitment. Recommended for short term and uninterrupted workloads
-	• Reserved Instance: you reserve a specif instance attributes and the period is specif (1y or 3y). You can buy and sell in the market place
+	• Reserved Instance: you reserve a specif instance attributes and the period is specif (1y or 3y). You can buy and sell in the market place (2 types: standard or convertible)
 	• Saving Plans: discount based on long-term usage. Commit to a certain type of usage ($ 10/h for 1y or 3y)
 	• Spot Instances: most cost-efficient. Not suitable for critical jobs or databases due to his dynamic way to bid for using
 	• Dedicated Hosts: physical server with EC2 instance capacity fully dedicated to your use. Purchasing using includes on-demand pay per second and reserved (1y or 3y)
@@ -319,6 +322,8 @@ AWS Cloud Practioner (CLF - CO2):
 	• They are bounded to a specific AZ
 	• Analogy: think of them as a USB
 	• Have a provisioned capacity (size in GBs and IOPs)
+	• Pay for volume type and Provisioned IOPS
+	• Snapshots are storaged in S3
 
 - EBS Snapshots:
 
@@ -532,7 +537,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• Types of device:
 		1. Snowcone: more compact device. Provides 8 TB of usable storage
 		2. Snowball: provides until 210 TB
-		3. Snowmobile: provides until 10 PB 
+		3. Snowmobile: provides until 100 PB 
 	
 - Amazon S3 Transfer Acceleration (S3TA):
 
@@ -771,6 +776,7 @@ AWS Cloud Practioner (CLF - CO2):
 - Amazon BeanStalk (deploying and scaling web applications and service/PaaS):
 
 	• Is a PaaS for web applications and services
+	• Free to use, you only pay for the underlying AWS resources that your application consumes
 	• Basically, you don't need to care about infrastructure, only to coding
 	• Easy-to-use service for deploying and scaling web applications and service
 	• Support for many platforms
@@ -782,23 +788,25 @@ AWS Cloud Practioner (CLF - CO2):
 	• Hybrid service
 	• Automatically deploy applcation
 	
-- Code Commit:
+- CodeCommit:
 
 	• AWS git hub
 
-- Code Build:
+- CodeBuild:
 
 	• Code building service in the cloud
 	• Compile source code, run tests
 	• Automate CI/CD Pipelines
 	
-- Code Pipeline:
+- CodePipeline:
 
 	• Orchestrate the different steps to have the code automation pushed to production
 	• Basis for CI/CD
+	• Detects changes in CodeCommit repositories
 	
-- AWS Artifact:
+- CodeArtifact:
 
+	• Helps in maintaining application dependencies via integration
 	• Is a secure way to setup your own central of resources for security report
 	• SOC to avaiable the security control implemented by AWS
 	• PCI to card transactions
@@ -806,6 +814,7 @@ AWS Cloud Practioner (CLF - CO2):
 - AWS CodeStar/CodeCatalyst:
 
 	• Unified UI to easily manage software development activities in one place
+	• Includes CodePipeline, CodeBuild, CodeDeploy
 	
 - AWS Cloud 9:
 
@@ -850,6 +859,8 @@ AWS Cloud Practioner (CLF - CO2):
 	• Global DNS
 	• Great to route users to the closest deployment with least latency
 	• Great for disaster recovery strategies
+	• Health checks and monitoring
+	• Domain registration
 	• Managed DNS
 	
 - DNS:
@@ -893,11 +904,13 @@ AWS Cloud Practioner (CLF - CO2):
 - AWS Outposts:
 
 	• Build your own on premisses servers and leverage it with AWS
-	• You are responsible for the Outposts Rack physical security 
+	• You are responsible for the Outposts Rack physical security
+	• Ideal for workloads that require low latency access to on-premises systems
 	
 - AWS WaveLength:
 
 	• Infrastructure deployments embedded with the telecomunication of 5G network
+	• Sevices close to edge locations to ensure ultra-low latency
 	
 - AWS Local Zones:
 
@@ -928,7 +941,7 @@ AWS Cloud Practioner (CLF - CO2):
 - Services to decouple applications:
 
 	• SNS: pub/sub model
-	• SQS: queue model
+	• SQS: queue model, send, store, and receive messages between software components at any volume
 	• Kinesis: real time data streaming model
 	
 - SQS (Simple Queue Service):
@@ -1008,6 +1021,9 @@ AWS Cloud Practioner (CLF - CO2):
 	• Get an history of events/API calls made within your AWS accounts (Console, SDK, CLI, AWS Services)
 	• Can put all the logs from CloudTrail into CloudWatch logs for S3
 	• Ensure that its AWS account activity meets the governance, compliance and auditing norms
+	• Find out the details of the user who changed it
+	• CloudTrail Insights helps AWS users identify and respond to unusual activity associated with write API calls
+	• Management events
 	
 - AWS X-Ray:
 	
@@ -1016,7 +1032,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• Identify users that are impacted
 	• SLA of process
 
-- Amazon CodeGuru:
+- Amazon CodeGuru (automated code review):
 
 	• Machine Learning for automated code review and application performance recommend 
 	• Supports with Java and Python
@@ -1049,6 +1065,7 @@ AWS Cloud Practioner (CLF - CO2):
 	
 	
 	Important:
+	• VPC is a logically isolated network for your AWS resources
 	• Subnets allows you to partition network inside VPC (tied to AZ)
 	• VPC Endpoints Gateway: provide private access to AWS services such as S3 and DynamoDB
 	• VPC Interface Endpoint: provide private access to all other services of AWS (s3 as well)
@@ -1056,6 +1073,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• VPC Peering: connect 2 VPCs privately with non overlapping IP ranges
 	• Internet Gateway: at the VPC level provides internet access
 	• Direct Connection: private network connection from your premises to AWS
+	• VPC spans all AZs within an AWS Region
 	
 /*******************************************************
 ********************************************************
@@ -1086,6 +1104,7 @@ AWS Cloud Practioner (CLF - CO2):
 	
 - Amazon Lex & Connect:
 
+	• Chatbot using Natural Language Understading (NLU)
 	• Same technology that powers Alexa
 	• Help build callcenter bots
 	
@@ -1172,9 +1191,14 @@ AWS Cloud Practioner (CLF - CO2):
 	• Multiple requests at the same time to cause instability to the service
 	• AWS Shield Standard: no additional cost
 	• AWS Shield Advanced: for 24/7 (Amazon CloudFront, Amazon EC2, Route 53, ELB, Global Acelerator) - Layer 3, 4, 7
-	• AWS WAF (Global): filter specif requests based on rules | protect against SQL injection and cross-site scripting | Layer 7 | can block all requests except the one that your allows
+	• AWS WAF (Global): 
+		1. Filter specif requests based on rules 
+		2. Protect against SQL injection and cross-site scripting (Layer 7)
+		3. Can block all requests except the one that your allows
+		4. Can inspect AmazonCloudFront distributions running on any HTTP web server
 	• CloudFront and Route 53:
 		1. Availability protection using global edge network
+	• Deployed for CloudFront, ALB, API Gateway, AWS AppSync
 	
 - AWS Network Firewall:
 
@@ -1205,10 +1229,13 @@ AWS Cloud Practioner (CLF - CO2):
 	• Encryption automatically enabled:
 		1. CloudTrail logs
 		2. S3 Glacier
+		3. AWS Storage Gateway
+	• AWS managed CMKs are CMKs in your account that are created, managed, and used on your behalf by an AWS service 
 		
 - Amazon CloudHSM:
 
 	• Consists on a physical encryption hardware device
+	• Generate, use and manage encryption keys
 	
 - Types of Keys:
 
@@ -1255,6 +1282,7 @@ AWS Cloud Practioner (CLF - CO2):
 - Amazon Detective:
 
 	• Rapid analyzes, investigates and indentifies the root cause of security issues or suspicious activities using ML and Graphs
+	• Cover CloudTrail logs, Amazon VPC Flow Logs and Amazon GuardDuty findings
 	
 - AWS Abuse:
 	
@@ -1279,7 +1307,10 @@ AWS Cloud Practioner (CLF - CO2):
 		
 - Pillars of well architecture:
 
-	1. Operational excellent: includes the abality to run and monitor systems to deliver business value and to continually improve supporting process and procedures (IaaS, documentation) - infrastructure as code
+	1. Operational excellent:
+		~ Infrastructure as code
+		~ Antecipate failure
+		~ Make frequent, small, reversible changes
 	2. Security: includes the ability to protect information, systems and assets while delivering business value
 	3. Reliabity: makes your application runs no matter what. Automatically recover from a failure
 	4. Performance efficency: right resource types and sizes base on your workload. It's all about adapting and providing the best performance
@@ -1309,7 +1340,7 @@ AWS Cloud Practioner (CLF - CO2):
 	
 - AWS Support Plans:
 
-	1. Basic: 24x7 access to customer service, documentation
+	1. Basic: 24x7 access to customer service, documentation, service health checks, one-on-one responses to account and billing questions
 	2. Developer: business hour email access, 1 primary contact  (general guidance < 24h | system impaired < 12h)
 	3. Business: 24x7 phone based technical support | unlimited contacts (production system impaired < 4h | production system down < 1h), provides architectural guidance contextual to your specific use-cases
 	4. Enterprise On-Ramp: concierge support team (for billing and account best pratices, business critical system down < 30 minutes) | online training with self-paced labs
@@ -1367,7 +1398,8 @@ AWS Cloud Practioner (CLF - CO2):
 	
 - AWS Control Tower:
 
-	• Easy way to set up and govern a secure and compliant multi-account AWS enviroment based on best pratices
+	• Easy way to set up and govern a secure AWS enviroment based on best pratices
+	• Provide pre-defined set of blueprint and guardrails to implement a landing zone
 	• Benefits:
 		1. Automate the setup of your enviroment in a few clicks
 		2. Automate ongoing policy
@@ -1448,10 +1480,11 @@ AWS Cloud Practioner (CLF - CO2):
 	• Visualize, understand and manage AWS costs over time
 	• Forecast usage up 12 months based on previous cost
 	• You can see all of your underutilized EC2 instances to identify how much you save
+	• Can receive savings plan recommendation
 	
 - AWS Cost and Usage Reports (CUR - costs by the hour or month)
 
-	• The AWS Cost and Usage Reports (AWS CUR) contains the most comprehensive set of cost and usage data available
+	• Most comprehensive set of cost and usage data available
 	• Cannot forecast your AWS account cost and usage
 	
 - AWS Budgets:
@@ -1490,6 +1523,7 @@ AWS Cloud Practioner (CLF - CO2):
 	
 - AWS Storage Gateway:
 
+	• Give you on-premises access to virtually unlimited cloud storage
 	• Tape Gateway, File Gateway and Volume Gateway
 	• Hybrid cloud storage service that gives you on-premises access to virtually unlimited cloud storage
 	• All data transferred between the gateway and AWS storage is encrypted using SSL
@@ -1591,11 +1625,17 @@ Layer 4:
 		1. Services and comunication protection
 		2. Patching guest OS and applications
 		3. Managing data encryption options
+		4. Firewall & Networking configuration of EC2
 		
 	• AWS (Responsibility for security "of" the cloud):
 		1. Protect/patching networking infrastructure (composed of hardware, software, networking and facilities that run AWS Cloud Services)
 		2. Compliance
 		3. AWS shield standard
+		4. AWS trains AWS employees, but a customer must train their own employees
+		
+	• Both:
+		1. Configuration management
+		2. Operating system (OS) configuration
 		
 - Cloud Foundations:
 
@@ -1637,3 +1677,50 @@ Layer 4:
 - AWS Device Farm:
 
 	• Testing tool to improve quality of your web and mobile apps
+	
+- AWS DataSync:
+
+	• A secure online data transfer tool/service that can automate ongoing trnasfers from on-premises systems into AWS
+	• Incremental data backups
+	
+- AWS Fault Injection Simulator (AWS FIS):
+
+	• Chaos Engineering to expose any blind spots that can disrupt the resiliency of the application
+	
+- CloudEndure Disaster Recovery:
+
+	• Continuous replication based disaster recovery mechanism
+	
+- AWS IoT Core:
+
+	• Connect any number of IoT devices to the cloud without requiring you to provision or manage servers
+	
+- AWS AppStream 2.0:
+
+	• Make its desktop applications available to the employees from browsers on their devices/laptops
+	• Desktop streaming service
+	
+- AWS WorkSpaces:
+
+	• Delivered globally rather than regionally
+	• Set of cloud-based products
+	
+- AWS AppSync:
+
+	• GraphQL API Service
+	
+- AWS OpsHub:
+
+	• Graphical user interface you can use to manage your AWS Snowball devices
+	
+- AWS Resource Groups:
+	
+	• Manage and automate tasks on large numbers of resources at a time
+	
+- AWS Elastic Transcoder:
+
+	• Convert your media file in the formats required by consumer playback devices
+	
+- AWS Well-Architected Tool:
+
+	• Helps you review the state of your workloads and compares them to the latest AWS architectural best practices
