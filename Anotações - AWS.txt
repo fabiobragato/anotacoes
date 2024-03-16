@@ -73,6 +73,7 @@ AWS Cloud Practioner (CLF - CO2):
 
 	• Names can be us-east-1, us-east-2
 	• A region is a cluster of datacenters
+	• Each region has 3-6 AZ
 	
 - How to choose your region:
 	
@@ -84,13 +85,9 @@ AWS Cloud Practioner (CLF - CO2):
 - Availability Zones (AZ):
 	
 	• One or more data centers in the same location
-	• Each region has 3-6 AZ
 	• Each AZ is one or more discrete data center with redundant power, network and connectivity
 	• Separeted for each other to prevent disasters
 	• connected with high brandwith, ultralow latency network
-	
-- Edge Locations:
-	
 	
 /*******************************************************
 ********************************************************
@@ -173,8 +170,8 @@ AWS Cloud Practioner (CLF - CO2):
 		
 - IAM Security Tools:
 
-	• Credential Reports (account level): list all your account's users and the various credentious
-	• Access advisor (user level): shows the service permissions granted to a user and when those services were accessed. You can use to revise your policies
+	• Credential Reports (account level): list all IAM users
+	• Access advisor (user level): review users permissions
 	
 - IAM Guidelines & Best Pratices:
 
@@ -210,7 +207,7 @@ AWS Cloud Practioner (CLF - CO2):
 
 	• It mainly consists in the capability of:
 		1. Renting virtual machines
-		2. Storing data on visual drive (EBS)
+		2. Storing data on visual drive (EBS/EFS/Instance Storage)
 		3. Distributing load across machine (ELB)
 		4. Scaling the services using an auto-scalling (ASG)
 	
@@ -221,7 +218,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• How much random-access memory (RAM)
 	• How much storage space:
 		1. Network attached (EBS & EFS)
-		2. Hardware (EC2 Instance Store)
+		2. Hardware (Instance Store)
 	• Network card: speed of the card, public IP address
 	• Firewall rules: security group
 	• Bootstrap script: EC2 instance user data ***
@@ -284,9 +281,9 @@ AWS Cloud Practioner (CLF - CO2):
 - EC2 Purchasing Options:
 	
 	• On demand: short workload, predictable pricing, pay by second. Has the hightest cost and no long-term commitment. Recommended for short term and uninterrupted workloads
-	• Reserved Instance: you reserve a specif instance attributes and the period is specif (1y or 3y). You can buy and sell in the market place (2 types: standard or convertible)
+	• Reserved Instance: you reserve a specif instance attributes and the period is specif (1y or 3y). You can buy and sell in the market place (2 types: standard or convertible) (72% discount)
 	• Saving Plans: discount based on long-term usage. Commit to a certain type of usage ($ 10/h for 1y or 3y)
-	• Spot Instances: most cost-efficient. Not suitable for critical jobs or databases due to his dynamic way to bid for using
+	• Spot Instances: most cost-efficient. Not suitable for critical jobs or databases due to his dynamic way to bid for using (90% discount)
 	• Dedicated Hosts: physical server with EC2 instance capacity fully dedicated to your use. Purchasing using includes on-demand pay per second and reserved (1y or 3y)
 	• Dedicated Instances: run on a hardware that is dedicated to you but may share with other instance in same account
 	• Capacity Reservation: reserve on-demand instance capacity in a specific AZ for any duration. No time commitment (can cancel any time). You pay whether your run instances or not
@@ -705,7 +702,7 @@ AWS Cloud Practioner (CLF - CO2):
 	
 	• Can be used to store, manage, and deploy private Docker container images
 	
-- ECS (Elastic Container Service):
+- ECS (Elastic Container Service/Only launch docker/Manage underlying servers):
 
 	• Launch docker containers on AWS
 	• Do not deploy and store Docker containeirs
@@ -796,7 +793,6 @@ AWS Cloud Practioner (CLF - CO2):
 
 	• Code building service in the cloud
 	• Compile source code, run tests
-	• Automate CI/CD Pipelines
 	
 - CodePipeline:
 
@@ -821,24 +817,27 @@ AWS Cloud Practioner (CLF - CO2):
 	• IDE for writting, running and debug code
 	• Allows colab in real time
 	
-- AWS System Manager (SSM):
+- AWS System Manager (SSM) (Operational insights):
 
 	• Operational insights of its resources to quickly identify any issues that might impact applications using those resources
 	• Helps you manage your EC2 and on premisses systems at scale
 	• Hybrid service
 	• Automatic patching for enhanced compliance
 	• Run commands accross an entire fleet of servers
-	• Store parameter configuration with the SSM parameter store
 	
 - AWS System Manager Session Manager (without opening new ports or using public IP addresses):
 
 	• Allows you to start a secure sheel on your EC2 and on premisses services without SSH
 	
-- SSM Parameter Store:
+- AWS System Manager Parameter Store:
 
 	• Secure storage for configurations and secrets
 	• API Keys, passwords, configurations
 	• Serverless, easy SDK
+	
+- AWS Secrets Manager (ONLY PROTECT, NOT GENERATE)
+
+	• Protect secrets needed to access your applications, services, and IT resources
 	
 /*******************************************************
 ********************************************************
@@ -887,12 +886,8 @@ AWS Cloud Practioner (CLF - CO2):
 	• Improves read performance
 	• DDoS protection
 	• Use caches to increase performance
-	
-- S3 Transfer Acelaration:
 
-	• Increase transfer speed between S3 buckets
-
-- AWS Global Acelerator:
+- AWS Global Acelerator (Static IP address/Good fit for non-HTTP use cases):
 
 	• Improve global application availability and performance using AWS Global Network
 	• The difference of CloudFront:
@@ -943,6 +938,12 @@ AWS Cloud Practioner (CLF - CO2):
 	• SNS: pub/sub model
 	• SQS: queue model, send, store, and receive messages between software components at any volume
 	• Kinesis: real time data streaming model
+		
+- SNS:
+	
+	• What if you want to send one message to many receivers? 
+	• Pub/Sub: it's a kind of notification, subscribers
+	• Massive e-mails subscriptions	
 	
 - SQS (Simple Queue Service):
 
@@ -955,12 +956,6 @@ AWS Cloud Practioner (CLF - CO2):
 - AWS Kinesis:
 
 	• Real time big data streaming
-	
-- SNS:
-	
-	• What if you want to send one message to many receivers? 
-	• Pub/Sub: it's a kind of notification, subscribers
-	• Massive e-mails subscriptions
 	
 - Amazon MQ (managed message broker service):
 
@@ -1025,7 +1020,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• CloudTrail Insights helps AWS users identify and respond to unusual activity associated with write API calls
 	• Management events
 	
-- AWS X-Ray:
+- AWS X-Ray (Understading dependencies in a microservice architecture):
 	
 	• Tracing and get visual analysis of your application of what is happening for each service
 	• Understading dependencies in a microservice architecture ***
@@ -1037,7 +1032,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• Machine Learning for automated code review and application performance recommend 
 	• Supports with Java and Python
 
-- AWS Heal Dashboard:
+- AWS Health Dashboard:
 
 	• Show all regions, all services health of AWS
 	
@@ -1102,13 +1097,13 @@ AWS Cloud Practioner (CLF - CO2):
 
 	• Google Tradutor (same)
 	
-- Amazon Lex & Connect:
+- Amazon Lex (NLU):
 
 	• Chatbot using Natural Language Understading (NLU)
 	• Same technology that powers Alexa
 	• Help build callcenter bots
 	
-- Amazon Comprehend:
+- Amazon Comprehend (NLP):
 
 	• Natural Language Processing - NLP
 	• Uses ML to find insights and relationships in text
@@ -1255,7 +1250,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• Protect agains criptocurrency attack
 	• Continuous monitoring for maliscious activity and unaunthorized behavior
 	
-- Amazon Inspector:
+- Amazon Inspector (vulnerabilities and deviations from AWS best practices):
 
 	• Automated security assessments
 	• Improve the security and compliance of applications deployed on AWS
@@ -1312,7 +1307,7 @@ AWS Cloud Practioner (CLF - CO2):
 		~ Antecipate failure
 		~ Make frequent, small, reversible changes
 	2. Security: includes the ability to protect information, systems and assets while delivering business value
-	3. Reliabity: makes your application runs no matter what. Automatically recover from a failure
+	3. Reliabity: makes your application runs no matter what. Automatically recover from a failure (CloudTrail, CloudWatch, AWS Config -> organizational change management)
 	4. Performance efficency: right resource types and sizes base on your workload. It's all about adapting and providing the best performance
 	5. Cost optimization: avoid un-needed costs
 	6. Sustaintability
@@ -1378,6 +1373,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• Restric account privileges using Service Control Policies (SCP)
 	• Create accounts per department, per cost, per service, per ambient
 	• Enable CloudTrail on all accounts to send logs to a S3 central account
+	• The AWS account must be able to operate as a standalone account. Only then it can be removed from AWS organizations
 
 - Organization Units (OU):
 
@@ -1447,7 +1443,7 @@ AWS Cloud Practioner (CLF - CO2):
 		1. Commit a certain $ amount per hour for 1y or 3y
 		2. Easiest way to setup long-term commitments on AWS
 	
-- AWS Compute Optimizer:
+- AWS Compute Optimizer (increase workload performance):
 	
 	• Reduces costs and improve performance by recommending optimal AWS resources using ML
 	• AWS Compute Optimizer helps you identify the optimal AWS resource configurations for:
@@ -1475,7 +1471,7 @@ AWS Cloud Practioner (CLF - CO2):
 	• You must activate both AWS generated tags and user-defined tags separately before they can appear in Cost Explorer or on a cost allocation report
 	• For each resource, each tag key must be unique, and each tag key can have only one value
 	
-- Cost Explorer:
+- Cost Explorer (Forecast/Under utilized EC2 instance/Saving plan recommendations):
 	
 	• Visualize, understand and manage AWS costs over time
 	• Forecast usage up 12 months based on previous cost
@@ -1523,7 +1519,6 @@ AWS Cloud Practioner (CLF - CO2):
 	
 - AWS Storage Gateway:
 
-	• Give you on-premises access to virtually unlimited cloud storage
 	• Tape Gateway, File Gateway and Volume Gateway
 	• Hybrid cloud storage service that gives you on-premises access to virtually unlimited cloud storage
 	• All data transferred between the gateway and AWS storage is encrypted using SSL
@@ -1678,7 +1673,7 @@ Layer 4:
 
 	• Testing tool to improve quality of your web and mobile apps
 	
-- AWS DataSync:
+- AWS DataSync (secure online data transfer):
 
 	• A secure online data transfer tool/service that can automate ongoing trnasfers from on-premises systems into AWS
 	• Incremental data backups
