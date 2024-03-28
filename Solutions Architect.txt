@@ -1,0 +1,420 @@
+AWS Cloud Practioner (SAA - CO3):
+
+/*******************************************************
+********************************************************
+
+	1. EC2
+	
+*******************************************************
+*******************************************************/
+
+- EC2 Basics:
+
+	• It mainly consists in the capability of:
+		1. Renting virtual machines
+		2. Storing data on visual drive (EBS/EFS/Instance Storage)
+		3. Distributing load across machine (ELB)
+		4. Scaling the services using an auto-scalling (ASG)
+	
+- EC2 Sizing & Configuration Options:
+
+	• Operating System (O/S): Linux, Windows, MAC OS
+	• How much compute power & cores (CPU)
+	• How much random-access memory (RAM)
+	• How much storage space:
+		1. Network attached (EBS & EFS)
+		2. Hardware (Instance Store)
+	• Network card: speed of the card, public IP address
+	• Firewall rules: security group
+	• Bootstrap script: EC2 instance user data ***
+	
+- EC2 user data:
+
+	• It's possible to bootstrap our instances with using an EC2 user data script
+	• Bootstraping means lauching commands when machine starts
+	• Trat script is only run once at the instance start
+	• Commands such as:
+		1. Installing updates
+		2. Installing softwares
+		3. Installing files from the internet
+	• EC2 user data only runs with root user (sudo -> command linux)
+	
+- EC2 have different types of instances:
+
+	• General Purpose: great for diversity of workloads such as web services or code repositories. Balance between computing, memory and networking
+	• Computed Optimized: great for compute intesive tasks that requires high performance processors, such like machine learning, dedicated gaming services etc
+	• Memory Optimized: fast performance for workloads that process large data sets in memory, such as BI, relational/non-relational databases
+	• Storage Optimized: great for storage-intensive tasks that requires high, sequential read and write access to large data sets on local storage, such as DW applications
+	
+- Security Groups (stateful - automatically return the traffic):
+	
+	• Fundamental of network security in AWS
+	• They control how traffic is allowed into our EC2 instance
+	• Security group only contain allow rules
+	• Security group rules can reference by IP or by security group
+	• Security group act as a firewall at the instance level
+	• Security group regulate:
+		1. Access to "Ports"
+		2. Authorized IP Ranges - IPv4 and IPv6
+	• Security group can be attached to multiples instances
+	• Locked by region (each has your own security group)
+	• By default all inbound traffic is blocked
+		
+- Resume of network:
+
+	• Firewall is like a barrier that controls the traffic between internal and external networks. It can be defined in softwares and hardwares. It's objective is to filter the traffic based on pre-set rules
+	• IP is a protocol that attributes an unique address to a dispositive connected in network. There are two versions of it:
+		1. IPv4: 32 bits
+		2. IPv6: 128 bits
+	• SSH (Secure Shell) is a safety protocol to login in remote systems. Allows safety access to Linux servers. Uses criptografy of public key and private key for authetication
+	• Port Range are numbers to associate to a specif service of a device:
+		1. 21: FTP
+		2. 22: SSH
+		3. 80: HTTP
+		4. 443: HTTPS
+		5. 3389: RDP
+	• HTTP is a protocol of transference that allows the comunication between two systems. Don't have additional security that made data vunerable
+	• HTTPS is a safety version of HTTP that adds SSL (Secure Sockets Layer). SSL has the function to criptograph the data transfered between server and user
+	
+	
+- Resume of SSH access (O/S):
+
+	• SSH: Linux and MAC O/Scaling
+	• Putty: Windows
+	• EC2 Instance Connection: Linux, MAC O/S, Windows via browser-based client
+	
+- EC2 Purchasing Options:
+	
+	• On demand: short workload, predictable pricing, pay by second. Has the hightest cost and no long-term commitment. Recommended for short term and uninterrupted workloads
+	• Reserved Instance: you reserve a specif instance attributes and the period is specif (1y or 3y). You can buy and sell in the market place (2 types: standard or convertible) (72% discount)
+	• Saving Plans: discount based on long-term usage. Commit to a certain type of usage ($ 10/h for 1y or 3y)
+	• Spot Instances: most cost-efficient. Not suitable for critical jobs or databases due to his dynamic way to bid for using (90% discount)
+	• Dedicated Hosts: physical server with EC2 instance capacity fully dedicated to your use. Purchasing using includes on-demand pay per second and reserved (1y or 3y)
+	• Dedicated Instances: run on a hardware that is dedicated to you but may share with other instance in same account
+	• Capacity Reservation: reserve on-demand instance capacity in a specific AZ for any duration. No time commitment (can cancel any time). You pay whether your run instances or not
+	
+- Shared Responsability for EC2:
+
+	• AWS:
+		1. Infrastructure
+		2. Isolation on physical hosts
+		3. Replacing faulty hardware
+		4. Compliance validation
+		
+	• User:
+		1. Security group rules
+		2. O/S patches and updates
+		3. Software and utilities installed
+		4. IAM roles assigned to EC2
+		5. Data security
+
+- Network has 2 types of IPs:
+	
+	• IpV4
+	• IpV6
+	
+- Public IP:
+
+	• Means the machine can be identified on the internet (WWW)
+	• Must be unique across the whole web
+	• Can be geo-located easily
+	
+- Private IP:
+
+	• Means the machine can only be identified on a private network only
+	• With Internet Gateway (a proxy) + NAT (Network Address Translation) also will get access to public servers
+	• Two differents private network (two companies) can have the same IPs
+	• Only a specif range of IPs can be used as private IP
+	
+- Elastic IPs:
+	
+	• When you stop an EC2 instance, it can change its public IP
+	• Elastic IPs are a fixed public IP
+	• Can attach it one instance at a time
+	• You can mask the failure of a instance by rapidly remapping the address to another instance in your account
+	• You can only have 5 Elastic IP in your account
+	• The best pratice is to use a random public IP and register a DNS instead using Elastic IPs
+	• The MORE best pratice we can use a Load Balancer and don't use public IP
+	
+- Hands On:
+
+	• By default, your EC2 machine comes with:
+		~ A private IP for the internal AWS network 
+		~ A public IP for the WWW
+		
+	• You can only access your EC2 machines via SSH using Public IPs
+	
+- EC2 Placement Groups:
+
+	• We don't have the direct access to the AWS infrastructure
+	• The main purpose is to say to AWS how to place our EC2 instance
+	• There's 3 strategies:
+	
+		1. Cluster:
+			~ Instances into a low latency group in a single AZ
+			~ Same rack, same AZ
+			~ Pros: great network (10 GBps bandwidth between instances)
+			~ Cons: if the rack fails, all instances fails at the same time
+			~ Use cases: big data job that needs to be completed fast, low latency applications
+			
+		2. Spread:
+			~ Instances across multiples hardware
+			~ Max 7x instances per group per AZ
+			~ Pros: can span across AZs, reduced risk of failure, EC2 instances on different physical hardwares
+			~ Cons: limited to 7 instances per AZ
+			~ Use cases: applications that need to maximize high availability, critical applications
+			
+		3. Partition:
+			~ Instances across many different partitions (which rely on different sets of racks) with an AZ
+			~ Up to 7 partitions per AZ
+			~ Use cases: HDFS, Cassandra, HBase, Kafka
+			
+- Elastic Network Interface (ENI):
+	
+	• Logical component in a VPC that represents a virtual network card
+	• Gives EC2 instances access to the network
+	• Have:
+		~ Primary private IPv4, one or more secondary IPv4
+		~ One elastic IPv4 per private IpV4
+		~ One public IPv4
+		~ Can have one or more security groups attached to ENI
+	• Can be created idependently and attach them on EC2 instances for failover
+	• Bound to a specif AZ
+	
+- EC2 Hibernate:
+
+	• The in memory (RAM) state is preserved
+	• The instance boot is much faster (The OS is not stopped / restarted)
+	• Do not boot the EC2 User Data script
+	• Under the hood: the RAM state is written to a file in the root EBS volume
+	
+/*******************************************************
+********************************************************
+
+	2. EC2 Instance Storage
+	
+*******************************************************
+*******************************************************/	
+	
+- Elastic Block Store (EBS): 
+
+	• Volume that is a network drive you can attach to your instances while they run
+	• It allows your instances to persist data even after their termination
+	• They can only be attached to one instance at time
+	• They are bounded to a specific AZ
+	• Can only be attached to a EC2 in the same AZ
+	• Analogy: think of them as a USB
+	• Have a provisioned capacity (size in GBs and IOPs)
+	• Pay for volume type and Provisioned IOPS
+	• Snapshots are storaged in S3
+	
+	
+- Delete on Terminate attribute:
+
+	• By default, is only ticked for root
+	• The EBS Volume is deleted when the instance is terminated
+
+- EBS Snapshots:
+
+	• Make a backup of your EBS Volume at a point in time
+	• It make possible to copy snapshots between AZ or Regions
+	• Are stored incrementally, which means you are billed only for the changed blocks stored
+	• Types:
+	
+		1. Snapshot Archive:
+			~ Move a snapshot to an "archive tier" that is 75% cheaper
+			~ Takes within 24 to 72 hours for restoring the archieve
+			
+		2. Recycle Bin for EBS Snapshots:
+			~ Setup rules (1 day to 1 year) to retain deleted snapshots to recover them after an accidental deletion
+			
+		3. Fast Snapshot Restore (FSR):
+			~ Force full initialization of snapshot to have no latency on the first use
+			~ Is more costful ($$$)
+	
+- Amazon Machine Image (AMI):
+
+	• Are a customization of an EC2 instance
+	• You can replicate your own software, configuration, OS, monitoring, security on a new EC2 instance
+	• Faster boot/configuration time because all your software is pre-packaged
+	• Must be in the same region as the Amazon EC2 Instance
+	• Types:
+		
+		~ Public AMI: AWS provided
+		~ Your own AMI: you make and maintain them yourself
+		~ AWS Marketplace AMI: an AMI someone else made
+	
+- EC2 Instance Store (Optimize caching):
+
+	• Is a type of EC2 instance with high performance (IOPs). 
+	• Risk of data loss due to lose their storage if they're stopped. Backups are on your responsability (ephemeral)
+	
+- EBS Volume Types:
+
+	• gp2 / gp3 (SSD): general purpose ssd volume that balances price and performance for a wide variety of workloads
+	• io1 / io2 Block Express (SSD): highest performance SSD volume for mission-critical low-latency or high-throughput workloads (only one that can be attached to multiple EC2 instances in the same AZ, MAX 16 at the same time)
+	• st1 (HDD): low cost hdd volume designed for frequently accessed workloads (cannot be used as a boot volume)
+	• sc1 (HDD): lowest cost HDD volume designed for less frequently accessed workloads (cannot be used as a boot volume)
+	
+- EBS Encryption:
+	
+	• Data at rest in encrypted
+	• Data in flight is encrypted
+	• Snapshots is encrypted
+	• Volumes are encrypted
+	• Encryption has minimal impact on latency
+	
+- Elastic File System (EFS):
+
+	• Is a type of storage and can only be mount with Linux EC2
+	• It's highly available
+	• More expensive, pay per use
+	• Can be attached on 100 EC2 Instances
+	• EC2 can access files on EFS across ** MANY AZ, REGIONS and VPCs
+	• Can be directly used with on-premises systems
+	• Encryption at rest using KMS
+	• POSIX file system (that has a standard file API and automatically scales
+	• Performance Mode:
+		
+		~ General purpose: latency-sensitive use cases (web server, CMS)
+		~ Max I/O: higher latency, highly parallel
+	
+	• Storage Tier:
+		
+		~ Standard:
+			~ For frequently accessed files
+			
+		~ EFS Infrequent Access (EFS - IA):
+			~ Is a storage class that is cost-optimized for files not accessed every day
+			~ It will move automatically your files to EFS-IA based on the last time they were accessed
+			~ Enable EFS - IA with a lifecycle policy
+			~ Charged for each time you read from or write
+			
+	• Availability and durability:
+	
+		• Standard: multi-az, great for prod
+		• One Zone: great for dev (combined with EFS -IA gives over 90% in cost saving)
+	
+- EC2 Image Builder:
+
+	• Is a tool to configurate an automation on the creation of Virtual Machines (VMs) or container images
+	
+/*******************************************************
+********************************************************
+
+	3. Elastic Load Balancing & Auto Scalling Groups
+	
+*******************************************************
+*******************************************************/
+	
+- Vertical scalability (scale up):
+
+	• Means increase the size of the instance (i.e. Junior -> Senior)
+	
+- Horizontal scalability (scale out):
+
+	• Means increase the number of instances (implies distributed systems)
+
+- High Availability:
+
+	• Means running your application/system in at least 2 AZ. Survive a data center loss
+	
+- Elasticity:
+
+	• Is the ability to "auto-scaling" based on the load 
+	
+- Agility:
+
+	• Is a new IT resource that can reduce time to make resources available to developers
+	• The ability to rapidly develop
+	
+- Elastic Load Balancing (ELB):
+
+	• Server that foward the internet traffic to multiple EC2 instances
+	• Exponse a single point of access (DNS) to your application
+	• Do a regular health checks to your instance
+	• Provides SSL termination for your websites and high availability accross zones
+	• Is managed by AWS, less cost to setup your own load balancer
+	• There are 3 types of Load Balancer:
+	
+		1. Application Load Balancer (ALB):
+			~ Load balancing to multiple HTTP applications across machines (target groups)
+			~ Load balancing to multiple applications on the same machine (containers)
+			~ HTTP/HTTPS/gRPC Protocols/Web Sockets
+			~ Support redirects (HTTP to HTTPS)
+			~ Routing tables to different target groups:
+				~ Based on path in URL (example.com/users & example.com/posts)
+				~ Based on hostname in URL (one.example.com & other.example.com)
+				~ Based on query string (example.com/users?id=123&order=false)
+			~ Static DNS
+			~ Great fit for micro services & container-based application (Docker & Amazon ECS)
+			~ To get the client's IP address, adds an additional header called "X-Forwarded-For" contains the client's IP address
+			
+		2. Network Load Balancer (NLB):
+			~ TCP/UDP protocols
+			~ High performance (less latency, millions of request per seconds)
+			~ One Static IP per AZ 
+			~ Supports assigning Elastic IP
+			~ Supports HTTP health checks as well TCP and HTTPS
+			
+		3. Gateway Load Balancer (GLB):
+			~ Route traffic to firewalls that you manage on EC2
+			~ Intrusion detection
+			~ Prevention Systems
+			~ Payload manipulation
+			~ Operates at Layer 3 (Network Layer)
+			~ GENEVE protocol on port 6081
+	
+	• All Load Balancers must have an Target Group to be redirected (that should be an EC2 instance, lambda, private IP adresses)
+	• Users can access a Load Balancer from anywhere but we can create a rule that all EC2 access is restricted only to Load Balancer acces
+	• Sticky Sessions:
+		
+		~ You can implement stickiness so that the same client is always redirected to the same instance behind a load balancer
+		~ It uses the "cookie" of 2 types:
+			1. Application based cookie
+			2. Duration based cookie
+			
+	• Cross Zone Load Balancing:
+		
+		~ Each load balancer instance distributes evenly across all registered instances in all AZ
+		~ No charges for inter AZ data with ALB
+		~ Charges for inter AZ data with NLB and GLB
+		
+	• SSL/TLS:
+	
+		~ Allows you traffic betwen your clients and your load balancer to be encrypted in transit
+		~ SSL refers to Secure Sockets Layer
+		~ TLS refers to Transport Layer Security which is a newer version of SSL
+		~ SSL certificates have an expiration date and must be renewed
+		~ You can manage certificates using ACM (AWS Certificate Manager)
+		~ HTTPS listener:
+			~ You must specify a default certificates
+			~ You can add an optional list of certs to support multiple domains
+			~ Clients can use SNI (Server Name Indication) to specify the hostname they reach
+		~ SNI:
+			~ Solves the problem of loading multiple SSL certificates onto one web server (to serve multiple websites)
+			~ Only works for ALB, NLB and CloudFront
+			
+	• Deregistration Delay:
+		
+		~ Stop sending new requests to the EC2 instance which is de-registering
+		~ Between 1 to 3600 seconds 
+		
+- Auto Scalling Group (ASG):
+
+	• Always free to use
+	• Load in your EC2 instance can change during the day. The goal of ASG is to:
+		1. Scale in
+		2. Scale out
+		3. Automatically register new instances to a load balancer
+		4. Replace unhealthy instances
+		5. Cost saving (runs at an optimal capacity)
+		6. Define minimum and maximum instances	
+		
+- ASG Strategies:
+
+	• Manual scalling
+	• Dynamic scalling (Cloudwatch trigger i.e. CPU < 50% add 2 units)
+	• Target tracking (I want CPU around 40%)
+	• Scheduled scalling (in the morning add 2 units)
+	• Predictive scalling (machine learning to predict a future traffic)
